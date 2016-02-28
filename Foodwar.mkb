@@ -1,0 +1,63 @@
+#!/usr/bin/env mkb
+
+options
+{
+ 	module_path="modules/"
+}
+
+files
+{
+	(Source)
+    Main.cpp
+
+	Foodwar.cpp
+	Foodwar.h
+	Input.cpp
+	Input.h
+	ClassUtil.h
+
+	Enemy.cpp
+	Enemy.h
+	Player.cpp
+	Player.h
+	Bullet.cpp
+	Bullet.h
+
+	Object.h
+	Resource.cpp
+	Resource.h
+
+	Scene.cpp
+	Scene.h
+	SceneGame.cpp
+	SceneGame.h
+
+	[Data]
+	(data)
+	Resources.group
+}
+
+subprojects
+{
+	derbh
+
+    iwutil
+    iw2dscenegraphcore
+    iw2dscenegraph
+    iwgx
+    iwresmanager
+    iwtween
+    s3eFlurry
+}
+
+assets
+{
+	(data-ram/data-gles1, data)
+    Resources.group.bin
+}
+
+deployment
+{
+	auto-derbh=1
+	s3e-compression=gzip
+}
