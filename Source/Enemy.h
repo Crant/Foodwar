@@ -4,14 +4,14 @@
 
 class Enemy : public Object
 {
-private:
+protected:
 	Iw2DSceneGraph::CSprite* zEnemySprite;
 	
 public:
 	Enemy();
 	~Enemy();
 
-	virtual void Init(Iw2DSceneGraph::CSprite* pSprite, float pVel);
+	virtual void Init(Iw2DSceneGraph::CSprite* pSprite, float pVel) = 0;
 	virtual void Update(float pDt, float pAlphaMul);
 	virtual void Render();
 

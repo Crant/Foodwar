@@ -21,6 +21,10 @@ class Resource
 	CDEFINE_SINGLETONS(Resource)
 private:
 	CIw2DImage* zTomato;
+	CIw2DImage* zCarrot;
+	CIw2DImage* zCauliflower;
+	CIw2DImage* zPaprika;
+
 	//Iw2DSceneGraph::CAtlas* zButtonSmallAtlas;
 	//Iw2DSceneGraph::CAtlas* zMarble_SelectedAtlas;
 	/*CIw2DImage* zPin;
@@ -49,6 +53,10 @@ public:
 	void Release();
 
 	CIw2DImage*	GetTomato() { return this->zTomato; }
+	CIw2DImage*	GetCarrot() { return this->zCarrot; }
+	CIw2DImage*	GetCauliflower() { return this->zCauliflower; }
+	CIw2DImage*	GetPaprika() { return this->zPaprika; }
+
 	//Iw2DSceneGraph::CAtlas* GetButtonSmallAtlas()		{return this->zButtonSmallAtlas;}
 	//Iw2DSceneGraph::CAtlas* GetMarbleSelectedAtlas()	{return this->zMarble_SelectedAtlas;}
 	//CIw2DImage*				GetMarbleSelected()			{return this->zMarble_Selected;}

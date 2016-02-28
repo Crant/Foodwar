@@ -12,6 +12,9 @@ void Resource::Init()
 	IwGetResManager()->SetCurrentGroup(group);
 
 	this->zTomato = Iw2DCreateImageResource("tomato");
+	this->zCarrot = Iw2DCreateImageResource("carrot");
+	this->zCauliflower = Iw2DCreateImageResource("cauliflower");
+	this->zPaprika = Iw2DCreateImageResource("paprika");
 
 	//// Load fonts
 	//this->zFontNormal		= Iw2DCreateFontResource("arial10");
@@ -22,4 +25,7 @@ void Resource::Init()
 void Resource::Release()
 {
 	SAFE_DELETE(this->zTomato);
+	SAFE_DELETE(this->zCarrot);
+	SAFE_DELETE(this->zCauliflower);
+	SAFE_DELETE(this->zPaprika);
 }

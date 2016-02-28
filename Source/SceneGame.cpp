@@ -3,6 +3,9 @@
 #include "IwGx.h"
 #include "Resource.h"
 #include "Input.h"
+#include "Carrot.h"
+#include "Cauliflower.h"
+#include "Paprika.h"
 using namespace Iw2DSceneGraph;
 
 //Velocity for sprite movement
@@ -12,13 +15,16 @@ Game::Game()
 {
 	srand((unsigned)(time(0)));
 	this->zPlayer = 0;
-	this->zEnemy = 0;
 }
 
 Game::~Game()
 {
 	SAFE_DELETE(this->zPlayer);
-	SAFE_DELETE(this->zEnemy);
+	for (auto it = this->zEnemys.begin(); it != this->zEnemys.end(); it++)
+	{
+		SAFE_DELETE(*it);
+	}
+	
 }
 
 void Game::Init()
@@ -42,26 +48,31 @@ void Game::Init()
 
 	this->zPlayer = new Player();
 
-	this->zPlayer->Init(playerSprite, VELOCITY_SPRITE);
+	this->zPlayer->Init(playerSprite, VELOCITY_SPRITE *  2);
 
 	float width = RESOURCE_MANAGER->GetTomato()->GetWidth() * this->zGraphics_ScaleX;
 	int amountOfEnemyStartLocations = IwGxGetScreenWidth() / width;
 
 	for (int i = 0; i < amountOfEnemyStartLocations - 1; i++)
 	{
-		this->zEnemyStartPos.push_back((i + 1) * RESOURCE_MANAGER->GetTomato()->GetWidth()* this->zGraphics_ScaleX);
+		this->zEnemyStartPos.push_back(i * RESOURCE_MANAGER->GetCarrot()->GetWidth()* this->zGraphics_ScaleX);
 	}
 
 	CSprite* enemySprite = new CSprite();
-	enemySprite->SetImage(RESOURCE_MANAGER->GetTomato());
-	enemySprite->m_X = 100 * this->zGraphics_ScaleX;
-	enemySprite->m_Y = enemySprite->GetImage()->GetHeight() * this->zGraphics_ScaleY;
+	enemySprite->SetImage(RESOURCE_MANAGER->GetCarrot());
+
+	int newPos = rand() % this->zEnemyStartPos.size();
+	enemySprite->m_X = this->zEnemyStartPos[newPos];
+
+	enemySprite->m_Y = 0;
 	enemySprite->m_ScaleX = this->zGraphics_ScaleX;
 	enemySprite->m_ScaleY = this->zGraphics_ScaleX;
 
-	this->zEnemy = new Enemy();
+	Enemy* enemy = new Carrot();
 
-	this->zEnemy->Init(enemySprite, VELOCITY_SPRITE);
+	enemy->Init(enemySprite, VELOCITY_SPRITE);
+
+	this->zEnemys.push_back(enemy);
 }
 
 void Game::Update(float pDeltaTime /* = 0.0f */, float pAlphaMul /* = 1.0f */)
@@ -73,7 +84,11 @@ void Game::Update(float pDeltaTime /* = 0.0f */, float pAlphaMul /* = 1.0f */)
 	Scene::Update(pDeltaTime, pAlphaMul);
 
 	this->zPlayer->Update(pDeltaTime, pAlphaMul);
-	this->zEnemy->Update(pDeltaTime, pAlphaMul);
+	for (auto itEnemy = this->zEnemys.begin(); itEnemy != this->zEnemys.end(); itEnemy++)
+	{
+		(*itEnemy)->Update(pDeltaTime, pAlphaMul);
+	}
+	
 
 	if (INPUT_MANAGER->GetTouchedStatus() && !INPUT_MANAGER->GetPrevTouchedStatus())
 	{
@@ -94,7 +109,10 @@ void Game::Render()
 
 	this->zPlayer->Render();
 
-	this->zEnemy->Render();
+	for (auto itEnemy = this->zEnemys.begin(); itEnemy != this->zEnemys.end(); itEnemy++)
+	{
+		(*itEnemy)->Render();
+	}
 }
 
 void Game::OnBackKeyPress()
@@ -119,30 +137,72 @@ void Game::OnSwap()
 
 void Game::CheckBulletCollisions()
 {
-	CSprite* enemy = this->zEnemy->GetEnemySprite();
-
 	std::vector<Bullet*> bullets = this->zPlayer->GetBullets();
 
 	bool bulletHit = false;
 	for (auto it = bullets.begin(); it != bullets.end() && !bulletHit; it++)
 	{
 		CSprite* bulletSprite = (*it)->GetSprite();
-		if(enemy->HitTest(bulletSprite->m_X, bulletSprite->m_Y))
+
+		for (int i = 0; i < this->zEnemys.size(); i++)
 		{
-			bulletHit = true;
-
-			this->zEnemy->SetHealth(this->zEnemy->GetHealth() - (*it)->GetDamage());
-			if (this->zEnemy->GetHealth() <= 0)
+			Enemy* enemy = this->zEnemys[i];
+			if (enemy->GetEnemySprite()->HitTest(bulletSprite->m_X, bulletSprite->m_Y))
 			{
-				enemy->m_Y = 0;
-				int newPos = rand() % this->zEnemyStartPos.size();
+				bulletHit = true;
 
-				enemy->m_X = this->zEnemyStartPos[newPos];
+				enemy->SetHealth(enemy->GetHealth() - (*it)->GetDamage());
+				if (enemy->GetHealth() <= 0)
+				{
+					//if (this->zEnemys.size() > 1)
+					//{
+					//	if (i < this->zEnemys.size() - 1)
+					//	{
+					//		this->zEnemys[i] = this->zEnemys[this->zEnemys.size() - 1];
+					//		this->zEnemys[this->zEnemys.size() - 1] = enemy;
+					//	}
+					//	i--;
+					//}
+					//this->zEnemys.pop_back();
+					SAFE_DELETE(enemy);
+					int newPos = rand() % this->zEnemyStartPos.size();
 
-				this->zEnemy->SetHealth(100);
+					CSprite* enemySprite = new CSprite();
+					
+					Enemy* newEnemy;
+
+					int enemyint = rand() % 300;
+					if (enemyint >= 0 && enemyint < 100)
+					{
+						newEnemy = new Carrot();
+						enemySprite->SetImage(RESOURCE_MANAGER->GetCarrot());
+					}
+						
+					else if (enemyint >= 100 && enemyint < 200)
+					{
+						newEnemy = new Cauliflower();
+						enemySprite->SetImage(RESOURCE_MANAGER->GetCauliflower());
+					}	
+					else
+					{
+						newEnemy = new Paprika();
+						enemySprite->SetImage(RESOURCE_MANAGER->GetPaprika());
+					}
+						
+					enemySprite->m_X = this->zEnemyStartPos[newPos];
+					enemySprite->m_Y = 0;
+					enemySprite->m_ScaleX = this->zGraphics_ScaleX;
+					enemySprite->m_ScaleY = this->zGraphics_ScaleX;
+					
+					
+					newEnemy->Init(enemySprite, VELOCITY_SPRITE);
+					this->zEnemys[i] = newEnemy;
+					//this->zEnemys.push_back(newEnemy);
+				}
+
+				this->zPlayer->RemoveBullet(*it);
 			}
-			
-			this->zPlayer->RemoveBullet(*it);
 		}
+		
 	}
 }

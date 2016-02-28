@@ -13,15 +13,6 @@ Enemy::~Enemy()
 	SAFE_DELETE(this->zEnemySprite);
 }
 
-void Enemy::Init(Iw2DSceneGraph::CSprite* pSprite, float pVel)
-{
-	this->zEnemySprite = pSprite;
-
-	this->zVelocity = pVel;
-
-	this->zHealth = 100;
-}
-
 void Enemy::Update(float pDt, float pAlphaMul)
 {
 	this->zEnemySprite->Update(pDt, pAlphaMul);

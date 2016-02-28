@@ -18,7 +18,7 @@ private:
 	float zFont_Scale;
 	float zActualFontHeight;
 
-	Enemy* zEnemy;
+	std::vector<Enemy*> zEnemys;
 	Player* zPlayer;
 	std::vector<int> zEnemyStartPos;
 private:

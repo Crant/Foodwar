@@ -31,7 +31,7 @@ void Player::Init(Iw2DSceneGraph::CSprite* pSprite, float pVel)
 
 void Player::Update(float pDt, float pAlphaMul)
 {
-	static const int BULLET_DELAY = 1.0f;
+	static const float BULLET_DELAY = 0.66f;
 
 	this->zBulletTimer += pDt;
 
@@ -43,7 +43,6 @@ void Player::Update(float pDt, float pAlphaMul)
 	}
 
 	//Delete bullets that have gone outside the screen
-	//Not working currently
 	for (int i = 0; i < this->zBullets.size(); i++)
 	{
 		Iw2DSceneGraph::CSprite* bulletSprite = this->zBullets[i]->GetSprite();

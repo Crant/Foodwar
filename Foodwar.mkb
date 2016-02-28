@@ -18,6 +18,13 @@ files
 
 	Enemy.cpp
 	Enemy.h
+	Carrot.cpp
+	Carrot.h
+	Cauliflower.cpp
+	Cauliflower.h
+	Paprika.cpp
+	Paprika.h
+
 	Player.cpp
 	Player.h
 	Bullet.cpp

@@ -4,5 +4,8 @@ CIwResGroup
 	
 	//Load Textures
 	"./textures/tomato.png"
-
+	"./textures/carrot.png"
+	"./textures/cauliflower.png"
+	"./textures/paprika.png"
+	
 }
