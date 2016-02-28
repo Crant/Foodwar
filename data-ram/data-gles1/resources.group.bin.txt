@@ -1,0 +1,8 @@
+ResGroupResources:
+	CIwTexture (0x3521f539)
+		"tomato" (0x1e8b7ef9)
+		Size: 21012
+	ResList 'CIwTexture' pos:40 size:21022
+
+ResGroupResources: Wrote 21026 bytes to CIwResGroup "Resources"
+

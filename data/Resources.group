@@ -1,0 +1,8 @@
+CIwResGroup
+{
+	name "Resources"
+	
+	//Load Textures
+	"./textures/tomato.png"
+
+}
