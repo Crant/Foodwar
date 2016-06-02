@@ -8,4 +8,6 @@ CIwResGroup
 	"./textures/cauliflower.png"
 	"./textures/paprika.png"
 	
+	//Load Fonts
+	"./fonts/arial10.gxfont"
 }

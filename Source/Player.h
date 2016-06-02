@@ -11,6 +11,8 @@ private:
 	//cocos2d::CCSprite* zPlayerSprite;
 	//std::vector<cocos2d::CCSprite*> zBullets;
 	float zBulletTimer;
+
+	int zScore;
 public:
 	Player();
 	~Player();
@@ -25,4 +27,7 @@ public:
 	Iw2DSceneGraph::CSprite*& GetPlayerSprite() { return this->zPlayerSprite; }
 	std::vector<Bullet*>& GetBullets() { return this->zBullets; }
 	void RemoveBullet(Bullet* bullet);
+	void AddScore(int score);
+	int GetScore() { return this->zScore; }
+
 };

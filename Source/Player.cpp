@@ -27,11 +27,13 @@ void Player::Init(Iw2DSceneGraph::CSprite* pSprite, float pVel)
 	this->zHealth = 100;
 
 	this->zBulletTimer = 0;
+
+	this->zScore = 0;
 }
 
 void Player::Update(float pDt, float pAlphaMul)
 {
-	static const float BULLET_DELAY = 0.66f;
+	static const float BULLET_DELAY = 0.5f;
 
 	this->zBulletTimer += pDt;
 
@@ -73,7 +75,6 @@ void Player::Update(float pDt, float pAlphaMul)
 	{
 		this->zBulletTimer = 0;
 
-		
 		Iw2DSceneGraph::CSprite* bulletSprite = new Iw2DSceneGraph::CSprite();
 
 		bulletSprite->SetImage(RESOURCE_MANAGER->GetTomato());
@@ -161,4 +162,9 @@ void Player::RemoveBullet(Bullet* bullet)
 			SAFE_DELETE(temp);
 		}
 	}
+}
+
+void Player::AddScore(int score)
+{
+	this->zScore += score;
 }

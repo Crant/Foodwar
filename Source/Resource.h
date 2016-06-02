@@ -44,9 +44,10 @@ private:
 	CIw2DImage* zPinBG;
 
 
-	CIw2DFont*	zFontNormal;
+	
 	CIw2DFont*  zFontBold;
 	CIw2DFont*  zFontLarge;*/
+	CIw2DFont*	zFontNormal;
 public:
 
 	void Init();
@@ -74,7 +75,7 @@ public:
 	//CIw2DImage*				GetPin()					{return this->zPin;}
 	//CIw2DImage*				GetPinBG()					{return this->zPinBG;}
 	//CIw2DImage*				GetButtonSmall()			{return this->zButtonSmall;}
-	//CIw2DFont*				GetFontNormal()				{return this->zFontNormal;}
+	CIw2DFont*				GetFontNormal()				{return this->zFontNormal;}
 	//CIw2DFont*				GetFontBold()				{return this->zFontBold;}
 	//CIw2DFont*				GetFontLarge()				{return this->zFontLarge;}
 };

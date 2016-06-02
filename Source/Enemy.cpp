@@ -6,6 +6,8 @@
 Enemy::Enemy()
 {
 	this->zEnemySprite = 0;
+
+	this->zScoreValue = 50;
 }
 
 Enemy::~Enemy()

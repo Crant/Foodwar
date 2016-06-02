@@ -39,6 +39,8 @@ files
 	SceneGame.cpp
 	SceneGame.h
 
+	Event.h
+
 	[Data]
 	(data)
 	Resources.group
